@@ -1,0 +1,19 @@
+{application, frontend, [
+  {description, "The frontend for controlling the TV"},
+  {vsn, "1"},
+  {modules, [
+    frontend_app,
+    frontend_sup,
+    frontend
+  ]},
+  {registered, [
+  ]},
+  {applications, [
+    kernel,
+    stdlib,
+    cowboy,
+    backend_fsm
+  ]},
+  {mod, { frontend_app, []}},
+  {env, []}
+]}.

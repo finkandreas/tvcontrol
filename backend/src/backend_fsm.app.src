@@ -1,0 +1,22 @@
+{application, backend_fsm,
+ [
+  {description, "The backend for controlling the TV"},
+  {vsn, "1"},
+  {modules, [
+    backend_fsm_app,
+    backend_fsm_sup,
+    backend_fsm,
+    xcomm_srv
+  ]},
+  {registered, [
+    backend_fsm_app,
+    backend_fsm,
+    xcomm_srv
+  ]},
+  {applications, [
+    kernel,
+    stdlib
+  ]},
+  {mod, { backend_fsm_app, []}},
+  {env, []}
+ ]}.
