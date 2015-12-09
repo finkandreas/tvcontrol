@@ -1,0 +1,3 @@
+DEPENDS:
+  - Linux kernel support for uinput (CONFIG_UINPUT)
+  - /dev/uinput is the device node, and must be writeable by the user

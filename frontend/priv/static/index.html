@@ -1,10 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <title>Hello World</title>
+        <meta charset="utf-8" />
+        <title>TV Control</title>
+        <link rel="stylesheet" type="text/css" href="static/css/keyboard.css" />
+        <script type="text/javascript" src="static/js/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="static/js/keyboard.js"></script>
+        <script type="text/javascript" src="static/js/websocket.js"></script>
     </head>
     <body>
-        <h1>Hello World</h1>
+        <div id="container">
+            <div id="keyboard">
+                <div class="row">
+                    <span class="symbol" keycode="2">Esc</span>
+                    <span class="symbol" keycode="103">&#9650;</span>
+                    <span class="symbol" keycode="14">&larr;</span>
+                </div>
+                <div class="row">
+                    <span class="symbol" keycode="105">&#9664;</span>
+                    <span class="symbol" keycode="352">Ok</span>
+                    <span class="symbol" keycode="106">&#9654;</span>
+                </div>
+                <div class="row">
+                    <span class="symbol">&nbsp;</span>
+                    <span class="symbol" keycode="108">&#9660;</span>
+                    <span class="symbol" keycode="119">&#9646;&#9646;</span>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

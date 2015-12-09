@@ -16,7 +16,9 @@ start() ->
 start(_StartType, _StartArgs) ->
     Dispatch = cowboy_router:compile([
         {'_', [
-            {"/", cowboy_static, {priv_file, frontend, "static/index.html"}}
+            {"/", cowboy_static, {priv_file, frontend, "static/index.html"}},
+            {"/ws", websocket_handler, []},
+            {"/static/[...]", cowboy_static, {priv_dir, frontend, "static/", [{mimetypes, cow_mimetypes, all}]}}
         ]}
     ]),
     {ok, _Pid} = cowboy:start_http(my_http_listener, 100, [{port, 9090}], [{env, [{dispatch, Dispatch}]}]),

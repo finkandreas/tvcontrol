@@ -6,7 +6,7 @@
 %% API Function Exports
 %% ------------------------------------------------------------------
 
--export([start_link/0]).
+-export([start_link/0, add_websocket/1]).
 
 %% ------------------------------------------------------------------
 %% gen_server Function Exports
@@ -22,6 +22,9 @@
 start_link() ->
     gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
 
+add_websocket(Ref) ->
+    gen_server:cast(?MODULE, {add_websocket, Ref}).
+
 %% ------------------------------------------------------------------
 %% gen_server Function Definitions
 %% ------------------------------------------------------------------
@@ -32,9 +35,14 @@ init(Args) ->
 handle_call(_Request, _From, State) ->
     {reply, ok, State}.
 
+handle_cast({add_websocket, Ref}, _State) ->
+    {noreply, Ref};
 handle_cast(_Msg, State) ->
     {noreply, State}.
 
+handle_info({send_websocket, Msg}, State) ->
+    State ! {timeout, null, Msg},
+    {noreply, State};
 handle_info(_Info, State) ->
     {noreply, State}.
 

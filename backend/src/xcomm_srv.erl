@@ -53,7 +53,7 @@ handle_call({stop, {stop}}, _From, Port) ->
     erlang:port_close(Port),
     exit(normal);
 
-handle_call({Cmd, Args}, _From, Port) ->
+handle_call({Cmd, Args}, _From, Port) when is_tuple(Args)->
     erlang:port_command(Port, term_to_binary({Cmd, Args})),
     {reply, ok, Port}.
 
