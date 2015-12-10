@@ -15,7 +15,8 @@
   ]},
   {applications, [
     kernel,
-    stdlib
+    stdlib,
+    lager
   ]},
   {mod, { backend_fsm_app, []}},
   {env, []}

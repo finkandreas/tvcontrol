@@ -16,6 +16,7 @@
 %% ===================================================================
 
 start_link() ->
+    lager:debug("~p start_link", [?MODULE]),
     supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 %% ===================================================================
@@ -23,6 +24,7 @@ start_link() ->
 %% ===================================================================
 
 init([]) ->
+    lager:debug("~p init", [?MODULE]),
     {ok, { #{strategy => one_for_one, intensity => 3, period => 3600}, [
       ?CHILD(frontend, worker)
     ]} }.

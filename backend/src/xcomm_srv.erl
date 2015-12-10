@@ -29,6 +29,7 @@ stop() ->
     gen_server:call(?MODULE, {stop, {stop}}).
 
 start_link() ->
+    lager:debug("~p start_link", [?MODULE]),
     gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
 
 %% ------------------------------------------------------------------
@@ -36,6 +37,7 @@ start_link() ->
 %% ------------------------------------------------------------------
 
 init(_Args) ->
+    lager:debug("~p init", [?MODULE]),
     PrivDir = case code:priv_dir(?MODULE) of
         {error, bad_name} ->
             EbinDir = filename:dirname(code:which(?MODULE)),
@@ -49,24 +51,33 @@ init(_Args) ->
     {ok, Port}.
 
 handle_call({stop, {stop}}, _From, Port) ->
+    lager:debug("~p stopping port", [?MODULE]),
     erlang:port_command(Port, term_to_binary({stop, {"stop"}})),
     erlang:port_close(Port),
     exit(normal);
 
 handle_call({Cmd, Args}, _From, Port) when is_tuple(Args)->
     erlang:port_command(Port, term_to_binary({Cmd, Args})),
+    {reply, ok, Port};
+
+handle_call(_Req, _From, Port) ->
+    lager:error("~p unknown call ~p", [?MODULE, _Req]),
     {reply, ok, Port}.
 
+
 handle_cast(_Msg, Port) ->
+    lager:error("~p unknown cast ~p", [?MODULE, _Msg]),
     {noreply, Port}.
 
+
 handle_info({'EXIT', Port, normal}, Port) ->
-    io:format("Port was normally closed~n"),
+    lager:debug("~p Port was normally closed", [?MODULE]),
     {noreply, Port};
 handle_info({Port, {exit_status, ExitStatus}}, Port) ->
-    io:format("Port crashed with exit code ~p~n", [ExitStatus]),
+    lager:error("~p Port crashed with exit code ~p", [?MODULE, ExitStatus]),
     exit(port_crashed);
 handle_info(_Info, Port) ->
+    lager:error("~p unknown info ~p", [?MODULE, _Info]),
     {noreply, Port}.
 
 terminate(_Reason, _State) ->

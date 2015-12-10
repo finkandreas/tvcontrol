@@ -10,10 +10,12 @@
 %% ===================================================================
 
 start() ->
+    lager:debug("~p start/0", [?MODULE]),
     {ok, StartedApps} = application:ensure_all_started(frontend),
-    io:format("Started these applications for the frontend: ~p~n", [StartedApps]).
+    lager:notice("Started these applications for the frontend: ~p", [StartedApps]).
 
 start(_StartType, _StartArgs) ->
+    lager:debug("~p start/2", [?MODULE]),
     Dispatch = cowboy_router:compile([
         {'_', [
             {"/", cowboy_static, {priv_file, frontend, "static/index.html"}},
@@ -25,4 +27,5 @@ start(_StartType, _StartArgs) ->
     frontend_sup:start_link().
 
 stop(_State) ->
+    lager:debug("~p stop", [?MODULE]),
     ok.

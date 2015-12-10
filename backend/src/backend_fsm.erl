@@ -21,6 +21,7 @@
 %% ------------------------------------------------------------------
 
 start_link() ->
+    lager:debug("~p start_link", [?MODULE]),
     gen_fsm:start_link({local, ?SERVER}, ?MODULE, [], []).
 
 %% ------------------------------------------------------------------
@@ -28,6 +29,7 @@ start_link() ->
 %% ------------------------------------------------------------------
 
 init(_Args) ->
+    lager:debug("~p init", [?MODULE]),
     {ok, initial_state_name, initial_state}.
 
 state_name(_Event, State) ->

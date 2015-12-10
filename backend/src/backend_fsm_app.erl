@@ -10,10 +10,12 @@
 %% ===================================================================
 
 start() ->
+    lager:debug("~p start/0", [?MODULE]),
     {ok, StartedApps} = application:ensure_all_started(backend_fsm),
-    io:format("Started these applications for the backend_fsm: ~p~n", [StartedApps]).
+    lager:notice("Started these applications for the backend_fsm: ~p~n", [StartedApps]).
 
 start(_StartType, _StartArgs) ->
+    lager:debug("~p start/2", [?MODULE]),
     backend_fsm_sup:start_link().
 
 stop(_State) ->
